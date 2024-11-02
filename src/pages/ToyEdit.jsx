@@ -31,7 +31,18 @@ export function ToyEdit() {
         value = type === 'number' ? +value : value
         setToyToEdit((prevToy) => ({ ...prevToy, [field]: value }))
     }
-
+    function handleLabelChange({ target }) {
+      const value = target.value
+      setToyToEdit(prevToy => {
+        let newLabels
+        if (prevToy.labels.includes(value)) {
+          newLabels = prevToy.labels.filter(label => label !== value)
+        } else {
+          newLabels = [...prevToy.labels, value]
+        }
+        return { ...prevToy, labels: newLabels }
+      })
+    }
     function onSaveToy(ev) {
         ev.preventDefault()
         if (!toyToEdit.price) toyToEdit.price = 1000

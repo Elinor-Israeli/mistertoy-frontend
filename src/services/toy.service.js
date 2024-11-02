@@ -81,3 +81,13 @@ function getRandomToy() {
 function getToyLabels() {
     return [...labels]
   }
+
+  function _getRandomLabels() {
+    const labelsCopy = [...labels]
+    const randomLabels = []
+    for (let i = 0; i < 2; i++) {
+      const randomIdx = Math.floor(Math.random() * labelsCopy.length)
+      randomLabels.push(labelsCopy.splice(randomIdx, 1)[0])
+    }
+    return randomLabels
+  }
