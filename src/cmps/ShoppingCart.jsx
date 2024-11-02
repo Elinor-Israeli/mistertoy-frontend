@@ -4,13 +4,13 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
 import { userService } from '../services/user.service.js'
-import { checkout } from '../store/actions/user.actions.js'
+// import { checkout } from '../store/actions/user.actions.js'
 import { REMOVE_TOY_FROM_CART } from '../store/reducers/toy.reducer.js'
 
 export function ShoppingCart({ isCartShown }) {
     const dispatch = useDispatch()
     const shoppingCart = useSelector(storeState => storeState.toyModule.shoppingCart)
-    const user = useSelector(storeState => storeState.userModule.loggedInUser)
+    // const user = useSelector(storeState => storeState.userModule.loggedInUser)
 
 
     function removeFromCart(toyId) {

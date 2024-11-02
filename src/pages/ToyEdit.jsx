@@ -46,33 +46,54 @@ export function ToyEdit() {
             })
     }
 
-    return (
-        <section className="toy-edit">
-            <h2>{toyToEdit._id ? 'Edit' : 'Add'} Toy</h2>
+    const { name, price, labels: toyLabels } = toyToEdit
+  const labels = toyService.getToyLabels()
 
-            <form onSubmit={onSaveToy} >
-                <label htmlFor="vendor">Vendor : </label>
-                <input type="text"
-                    name="vendor"
-                    id="vendor"
-                    placeholder="Enter vendor..."
-                    value={toyToEdit.vendor}
-                    onChange={handleChange}
-                />
-                <label htmlFor="price">Price : </label>
-                <input type="number"
-                    name="price"
-                    id="price"
-                    placeholder="Enter price"
-                    value={toyToEdit.price}
-                    onChange={handleChange}
-                />
 
-                <div>
-                    <button>{toyToEdit._id ? 'Save' : 'Add'}</button>
-                    <Link to="/toy">Cancel</Link>
-                </div>
-            </form>
-        </section>
-    )
+  return (
+    <section className="toy-edit">
+      <h2>{toyToEdit._id ? 'Edit' : 'Add'} Toy</h2>
+
+      <form onSubmit={onSaveToy}>
+        <label htmlFor="name">Name:</label>
+        <input
+          onChange={handleChange}
+          value={name}
+          type="text"
+          name="name"
+          id="name"
+          required
+        />
+
+        <label htmlFor="price">Price:</label>
+        <input
+          onChange={handleChange}
+          value={price}
+          type="number"
+          name="price"
+          id="price"
+          min={1}
+          required
+        />
+
+        <label>Labels:</label>
+        <div className="labels-container">
+          {labels.map(label => (
+            <div key={label}>
+              <input
+                type="checkbox"
+                id={label}
+                value={label}
+                checked={toyLabels.includes(label)}
+                onChange={handleLabelChange}
+              />
+              <label htmlFor={label}>{label}</label>
+            </div>
+          ))}
+        </div>
+
+        <button>{toyToEdit._id ? 'Save' : 'Add'}</button>
+      </form>
+    </section>
+  )
 }

@@ -1,8 +1,8 @@
-import { UserMsg } from './UserMsg.jsx'
-import { LoginSignup } from './LoginSignup.jsx'
-import { userService } from '../services/user.service.js'
+// import { UserMsg } from './UserMsg.jsx'
+// import { LoginSignup } from './LoginSignup.jsx'
+// import { userService } from '../services/user.service.js'
 import { showErrorMsg, showSuccessMsg } from '../services/event-bus.service.js'
-import { logout } from '../store/actions/user.actions.js'
+// import { logout } from '../store/actions/user.actions.js'
 import { TOGGLE_CART_IS_SHOWN } from '../store/reducers/toy.reducer.js'
 import { useDispatch, useSelector } from 'react-redux'
 import { NavLink } from 'react-router-dom'
@@ -12,7 +12,7 @@ import { NavLink } from 'react-router-dom'
 
 export function AppHeader() {
     const dispatch = useDispatch()
-    const user = useSelector(storeState => storeState.userModule.loggedInUser)
+    // const user = useSelector(storeState => storeState.userModule.loggedInUser)
     // console.log('user:', user)
 
     function onLogout() {
@@ -45,17 +45,7 @@ export function AppHeader() {
 
                 </nav>
             </section>
-            {user ? (
-                < section >
-                    <span to={`/user/${user._id}`}>Hello {user.fullname} <span>${user.score.toLocaleString()}</span></span>
-                    <button onClick={onLogout}>Logout</button>
-                </ section >
-            ) : (
-                <section>
-                    <LoginSignup />
-                </section>
-            )}
-            <UserMsg />
+           
         </header>
 
     )

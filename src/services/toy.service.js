@@ -1,11 +1,19 @@
-
-import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
-import { userService } from './user.service.js'
 import { httpService } from './http.service.js'
 
 const STORAGE_KEY = 'toyDB'
 const BASE_URL = 'toy/'
+
+const labels = [
+    'On wheels',
+    'Box game',
+    'Art',
+    'Baby',
+    'Doll',
+    'Puzzle',
+    'Outdoor',
+    'Battery Powered',
+  ]
 
 export const toyService = {
     query,
@@ -14,22 +22,20 @@ export const toyService = {
     remove,
      getEmptyToy,
     getDefaultFilter,
-    getRandomToy
+    getRandomToy,
+    getToyLabels,
 }
 
 
 function query(filterBy = {}) {
-    // return axios.get(BASE_URL, { params: filterBy }).then(res => res.data)
     return httpService.get(BASE_URL, filterBy)
 }
 
 function getById(toyId) {
-    // return axios.get(BASE_URL + toyId).then(res => res.data)
     return httpService.get(BASE_URL + toyId)
 
 }
 function remove(toyId) {
-    // return axios.delete(BASE_URL + toyId).then(res => res.data) // api/toy/c102/remove
     return httpService.delete(BASE_URL + toyId)
 
 }
@@ -41,13 +47,27 @@ function save(toy) {
         return httpService.post(BASE_URL, toy)
     }
 }
+
+function getDefaultFilter() {
+    return {
+      txt: '',
+      inStock: null,
+      labels: [],
+      pageIdx: 0,
+      sortBy: {
+        type: '',
+        desc: 1
+      }
+    }
+  }
+  
 function getEmptyToy() {
     return {
-        vendor: '',
-        price: '',
-        speed: '',
+      name: '',
+      price: '',
+      labels: _getRandomLabels(),
     }
-}
+  }
 
 function getRandomToy() {
     return {
@@ -58,6 +78,6 @@ function getRandomToy() {
 }
 
 
-function getDefaultFilter() {
-    return { txt: '', maxPrice: '', minSpeed: '' }
-}
+function getToyLabels() {
+    return [...labels]
+  }
