@@ -1,23 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-// import './App.css'
+import './assets/style/main.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import { Provider } from 'react-redux'
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-    </>
-  )
+import { AppHeader } from './cmps/AppHeader.jsx'
+import { AppFooter } from './cmps/AppFooter.jsx'
+
+import { HomePage } from './pages/HomePage.jsx'
+import { AboutUs } from './pages/AboutUs.jsx'
+import { ToyIndex } from './pages/ToyIndex.jsx'
+import { store } from './store/store.js'
+import { ToyEdit } from './pages/ToyEdit.jsx'
+import { ToyDetails } from './pages/ToyDetails.jsx'
+import { UserDetails } from './pages/UserDetails.jsx'
+
+
+export default function App() {
+
+    return (
+        <Provider store={store}>
+            <Router>
+                <section className="app">
+                    <AppHeader />
+                    <main className='main-layout'>
+                        <Routes>
+                            <Route element={<HomePage />} path="/" />
+                            <Route element={<AboutUs />} path="/about" />
+                            <Route element={<ToyIndex />} path="/toy" />
+                            {/* <Route element={<ToyEdit />} path="/toy/edit" /> */}
+                            <Route element={<ToyEdit />} path="/toy/edit/:toyId?" />
+                            <Route element={<ToyDetails />} path="/toy/:toyId" />
+                            <Route element={<UserDetails />} path="/user/:userId" />
+                        </Routes>
+                    </main>
+                    <AppFooter />
+                </section>
+            </Router>
+        </Provider>
+
+    )
 }
 
-export default App
+
