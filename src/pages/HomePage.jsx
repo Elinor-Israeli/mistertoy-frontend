@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux"
 // import { CHANGE_BY } from "../store/reducers/user.reducer.js"
 import { useEffect, useState } from "react"
 import { useEffectUpdate } from '../hooks/useEffectUpdate.js'
+import { GoogleMap } from '../cmps/GoogleMap.jsx'
 
 // const { useState } = React
 // const { useSelector, useDispatch } = ReactRedux
@@ -38,6 +39,7 @@ export function HomePage() {
                 }}>+10</button>
             </h2 >
             <img src={logoImg} />
+            <GoogleMap/>
         </section >
     )
 }

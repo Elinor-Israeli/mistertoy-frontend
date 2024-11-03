@@ -22,7 +22,7 @@ export const toyService = {
     remove,
      getEmptyToy,
     getDefaultFilter,
-    getRandomToy,
+  
     getToyLabels,
 }
 
@@ -69,13 +69,13 @@ function getEmptyToy() {
     }
   }
 
-function getRandomToy() {
-    return {
-        vendor: 'Susita-' + (Date.now() % 1000),
-        price: utilService.getRandomIntInclusive(1000, 9000),
-        speed: utilService.getRandomIntInclusive(90, 200),
-    }
-}
+// function getRandomToy() {
+//     return {
+//         vendor: 'Susita-' + (Date.now() % 1000),
+//         price: utilService.getRandomIntInclusive(1000, 9000),
+//         speed: utilService.getRandomIntInclusive(90, 200),
+//     }
+// }
 
 
 function getToyLabels() {
