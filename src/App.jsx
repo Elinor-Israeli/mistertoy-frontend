@@ -1,4 +1,7 @@
-import './assets/style/main.css'
+// import './assets/style/main.css'
+
+import '../src/assets/style/main.scss'
+
 
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
 import { Provider } from 'react-redux'
@@ -13,6 +16,8 @@ import { store } from './store/store.js'
 import { ToyEdit } from './pages/ToyEdit.jsx'
 import { ToyDetails } from './pages/ToyDetails.jsx'
 import { UserDetails } from './pages/UserDetails.jsx'
+import { ToyDashboard } from './pages/ToyDashboard.jsx'
+
 
 
 export default function App() {
@@ -26,6 +31,7 @@ export default function App() {
                         <Routes>
                             <Route element={<HomePage />} path="/" />
                             <Route element={<AboutUs />} path="/about" />
+                            <Route element={<ToyDashboard />} path='/dashboard' />
                             <Route element={<ToyIndex />} path="/toy" />
                             {/* <Route element={<ToyEdit />} path="/toy/edit" /> */}
                             <Route element={<ToyEdit />} path="/toy/edit/:toyId?" />

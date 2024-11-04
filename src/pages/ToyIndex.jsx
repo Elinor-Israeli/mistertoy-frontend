@@ -1,95 +1,69 @@
-// const { useState, useEffect } = React
-// const { Link } = ReactRouterDOM
-// const { useSelector, useDispatch } = ReactRedux
+import { useDispatch, useSelector } from "react-redux"
+import { useEffect } from "react"
 
-import { useDispatch, useSelector } from 'react-redux'
-import { ToyFilter } from '../cmps/ToyFilter.jsx'
-import { ToyList } from '../cmps/ToyList.jsx'
-import { toyService } from '../services/toy.service.js'
-import { showSuccessMsg, showErrorMsg } from '../services/event-bus.service.js'
-import { loadToys,  removeToy, removeToyOptimistic, saveToy, setFilterBy } from '../store/actions/toy.actions.js'
-import { ADD_TOY_TO_CART } from '../store/reducers/toy.reducer.js'
-import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { loadToys, removeToy } from "../store/actions/toy.actions.js"
+import { ToyList } from "../cmps/ToyList.jsx"
+import { useNavigate, useSearchParams } from "react-router-dom"
+import { ToyFilter } from "../cmps/ToyFilter.jsx"
+import { SET_FILTER_BY } from "../store/reducers/toy.reducer.js"
+import { toyService } from "../services/toy.service.js"
 
 export function ToyIndex() {
-
+    const navigate = useNavigate()
     const dispatch = useDispatch()
+
     const toys = useSelector(storeState => storeState.toyModule.toys)
     const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
-    const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
+    const labels = useSelector(storeState => storeState.toyModule.labels)
+
+    const [searchParams, setSearchParams] = useSearchParams()
+    const defaultFilter = toyService.getFilterFromSearchParams(searchParams)
 
     useEffect(() => {
+        onSetFilterBy(defaultFilter)
+    }, [])
+
+    useEffect(() => {
+        setSearchParams(filterBy)
         loadToys()
             .catch(err => {
-                showErrorMsg('Cannot load toys!')
+                console.log('Cannot load toys! ' + err)
             })
     }, [filterBy])
 
-    function onSetFilter(filterBy) {
-        setFilterBy(filterBy)
-    }
-
-    function onRemoveToy(toyId) {
-        removeToyOptimistic(toyId)
-            .then(() => {
-                showSuccessMsg('Toy removed')
-            })
-            .catch(err => {
-                showErrorMsg('Cannot remove toy')
-            })
+    function onSetFilterBy(filterBy) {
+        dispatch({ type: SET_FILTER_BY, filterBy })
     }
 
     function onAddToy() {
-        const toyToSave = toyService.getRandomToy()
-        saveToy(toyToSave)
-            .then((savedToy) => {
-                showSuccessMsg(`Toy added (id: ${savedToy._id})`)
+        navigate('/toy/edit/')
+    }
+
+    function onRemoveToy(toyId) {
+        const userConfirm = confirm('Please confirm to remove toy!')
+        if (!userConfirm) return
+        removeToy(toyId)
+            .then(() => {
+                console.log('Toy removed')
             })
             .catch(err => {
-                showErrorMsg('Cannot add toy')
+                console.log('err:', err)
             })
     }
 
-    function onEditToy(toy) {
-        const price = +prompt('New price?')
-        const toyToSave = { ...toy, price }
-
-        saveToy(toyToSave)
-            .then((savedToy) => {
-                showSuccessMsg(`Toy updated to price: $${savedToy.price}`)
-            })
-            .catch(err => {
-                showErrorMsg('Cannot update toy')
-            })
+    function onEditToy(toyId) {
+        navigate('/toy/edit/' + toyId)
     }
 
-    function addToCart(toy) {
-        console.log(`Adding ${toy.vendor} to Cart`)
-        dispatch({ type: ADD_TOY_TO_CART,  toy })
-        showSuccessMsg('Added to Cart')
+    function onToyDetails(toyId) {
+        navigate('/toy/' + toyId)
     }
 
     return (
-        <div>
-            <h3>Toys App</h3>
-            <main>
-                <Link to="/toy/edit">Add toy</Link>
-                <button className='add-btn' onClick={onAddToy}>Add Random Toy ⛐</button>
-                <ToyFilter filterBy={filterBy} onSetFilter={onSetFilter} />
-                {!isLoading
-                    ? <ToyList
-                        txt='abababa'
-                        toys={toys}
-                        onRemoveToy={onRemoveToy}
-                        onEditToy={onEditToy}
-                        addToCart={addToCart}
-                    />
-                    : <div>Loading...</div>
-                }
-                <hr />
-            </main>
-        </div>
+        <section className="toy-index">
+            <ToyFilter onSetFilterBy={onSetFilterBy} filterBy={filterBy} labels={labels} />
+            <button className="add-btn" onClick={onAddToy}>Add Toy</button>
+            <ToyList toys={toys} onEditToy={onEditToy} onToyDetails={onToyDetails} onRemoveToy={onRemoveToy} />
+        </section>
     )
 }
-

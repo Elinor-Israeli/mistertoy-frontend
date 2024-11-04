@@ -1,34 +1,21 @@
 import { ToyPreview } from "./ToyPreview.jsx"
 
-export function ToyList({ toys, onRemoveToy, onEditToy, addToCart }) {
-    // console.log('toys:', toys)
-    if (!toys) return <div>Loading</div>
-    return (
-        <ul className="toy-list">
-            {toys.map(toy =>
-                <li className="toy-preview" key={toy._id}>
-                    <ToyPreview toy={toy} />
+export function ToyList({ toys, onEditToy, onToyDetails, onRemoveToy }) {
 
+    return (
+        <section className="toy-list list-layout">
+            {toys.map(toy => {
+                return (<div key={toy._id} className="toy-preview">
+                    <ToyPreview toy={toy} key={toy._id} />
                     <div>
-                        <button onClick={() => onRemoveToy(toy._id)}>x</button>
-                        <button onClick={() => onEditToy(toy)}>Edit</button>
+
+                        <button onClick={() => onToyDetails(toy._id)}>details</button>
+                        <button onClick={() => onEditToy(toy._id)}>edit</button>
+                        <button onClick={() => onRemoveToy(toy._id)}>remove</button>
                     </div>
 
-                    <button className="buy" onClick={() => addToCart(toy)}>
-                        Add to Cart
-                    </button>
-                </li>)}
-        </ul>
+                </div>)
+            })}
+        </section>
     )
-}
-
-ToyList.propTypes = {
-    txt(props, propName, componentName) {
-        if (!(propName in props)) {
-            throw new Error(`missing ${propName}`)
-        }
-        if (props[propName].length < 6) {
-            throw new Error(`${propName} was too short`)
-        }
-    }
 }

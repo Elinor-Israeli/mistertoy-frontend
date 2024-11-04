@@ -22,7 +22,7 @@ export const toyService = {
     remove,
      getEmptyToy,
     getDefaultFilter,
-  
+    getFilterFromSearchParams,
     getToyLabels,
 }
 
@@ -91,3 +91,11 @@ function getToyLabels() {
     }
     return randomLabels
   }
+  function getFilterFromSearchParams(searchParams) {
+    const defaultFilter = getDefaultFilter()
+    const filterBy = {}
+    for (const field in defaultFilter) {
+        filterBy[field] = searchParams.get(field) || ''
+    }
+    return filterBy
+}

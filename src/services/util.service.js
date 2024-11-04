@@ -63,11 +63,11 @@ function animateCSS(el, animation) {
 }
 
 function debounce(func, timeout = 300) {
-    let timer
-    return (...args) => {
-        clearTimeout(timer)
+    let timer;
+    return function (...args) {
+        clearTimeout(timer);
         timer = setTimeout(() => {
-            func.apply(this, args)
-        }, timeout)
+            func.apply(this, args);  // Use regular function to maintain context
+        }, timeout);
     }
 }
