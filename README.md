@@ -1,8 +1,16 @@
-# React + Vite
+# 🧸 MisterToy 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**MisterToy** is a RESTful backend service that powers a toy marketplace, allowing users to browse, filter, add, edit, and delete toy listings. It also includes user authentication and admin functionality.
 
-Currently, two official plugins are available:
+This is the **backend** part of the project, built with Node.js and Express.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
+
+## 📦 Features
+
+- 🔍 Get a list of toys (with filters like category, price, stock)
+- ➕ Add new toy listings
+- ✏️ Edit or delete toys (admin only)
+- 🔐 User login/signup with JWT authentication
+- 🧑‍💼 Admin access controls
+- 🌍 RESTful API architecture
